@@ -29,12 +29,13 @@ class Amortization implements CalculatorOperationsInterface{
 			array_push($amortizationArray, array($principal + $monthlyPayment, $monthlyPayment, $principal, 0));
 			return $amortizationArray;
 		}
-		
+
 		//If the loan is fully amortized
 		for($i = 1; $i <= $months; $i++){
-			$interestPayOff = $principal * $rate;
+			$interestPayOff = ($principal * ($rate / 100) / 12);
 			$principalPayOff = $monthlyPayment - $interestPayOff;
 			$principal -= $principalPayOff;
+
 			array_push($amortizationArray, array($monthlyPayment, $interestPayOff, $principalPayOff, $principal));
 		}
 		return $amortizationArray;
