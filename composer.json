@@ -1,4 +1,5 @@
 {
+    "name": "jonathanza/Mortgage-Calculator",
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
     },
