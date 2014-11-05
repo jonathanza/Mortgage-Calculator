@@ -58,10 +58,10 @@ class Amortization implements CalculatorOperationsInterface{
 		}
 	}
 
-    private function formatOutput($amortizationArray, $args) {
+    public function formatOutput($input, $args) {
         $output = array();
 
-        foreach ($amortizationArray as $payment) {
+        foreach ($input as $payment) {
             array_push($output, array(
                 number_format($payment[0], $args['precision'], $args['dec_point'], $args['thousands_sep']),
                 number_format($payment[1], $args['precision'], $args['dec_point'], $args['thousands_sep']),

@@ -33,7 +33,7 @@ class MonthlyPayment implements CalculatorOperationsInterface{
         }
 	}
 
-    private function formatOutput($amount, $args) {
-        return number_format($amount, $args['precision'], $args['dec_point'], $args['thousands_sep']);
+    public function formatOutput($input, $args) {
+        return number_format($input, $args['precision'], $args['dec_point'], $args['thousands_sep']);
     }
 }
