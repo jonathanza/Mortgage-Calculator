@@ -10,13 +10,24 @@ class Amortization implements CalculatorOperationsInterface{
 		$this->payment = $payment;
 	}
 
-	public function evaluate($principal, $rate, $months, $io){
+	public function evaluate($principal, $rate, $months, $args = array()) {
+        $args_default = array(
+            'interest_only' => false,
+            'format_output'	=> false,
+
+            'precision'     => 2,
+            'dec_point'		=> localeconv()['decimal_point'],
+            'thousands_sep'	=> localeconv()['thousands_sep'],
+        );
+
+        $args = array_merge($args_default, $args);
+
 		$amortizationArray = array();
 
-		$monthlyPayment = $this->payment->evaluate($principal, $rate, $months, $io);
+		$monthlyPayment = $this->payment->evaluate($principal, $rate, $months);
 
 		//If the loan is interest-only
-		if($io){
+		if($args['interest_only']) {
 			$i = 1;
 
 			//Generate payments array
@@ -38,6 +49,27 @@ class Amortization implements CalculatorOperationsInterface{
 
 			array_push($amortizationArray, array($monthlyPayment, $interestPayOff, $principalPayOff, $principal));
 		}
-		return $amortizationArray;
+
+		if ($args['format_output']) {
+			return $this->formatOutput($amortizationArray, $args);
+		}
+		else {
+			return $amortizationArray;
+		}
 	}
+
+    private function formatOutput($amortizationArray, $args) {
+        $output = array();
+
+        foreach ($amortizationArray as $payment) {
+            array_push($output, array(
+                number_format($payment[0], $args['precision'], $args['dec_point'], $args['thousands_sep']),
+                number_format($payment[1], $args['precision'], $args['dec_point'], $args['thousands_sep']),
+                number_format($payment[2], $args['precision'], $args['dec_point'], $args['thousands_sep']),
+                number_format($payment[3], $args['precision'], $args['dec_point'], $args['thousands_sep']),
+            ));
+        }
+
+        return $output;
+    }
 }
