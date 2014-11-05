@@ -8,7 +8,8 @@ class TotalInterest implements CalculatorOperationsInterface {
 	protected $totalCost;
     protected $args_default;
 
-	public function __construct(TotalCost $totalCost){
+	public function __construct(TotalCost $totalCost) {
+        $localeconv = localeconv();
 		$this->totalCost = $totalCost;
 
         $this->args_default = array(
@@ -16,8 +17,8 @@ class TotalInterest implements CalculatorOperationsInterface {
             'format_output' => false,
 
             'precision'     => 2,
-            'dec_point'     => localeconv()['decimal_point'],
-            'thousands_sep' => localeconv()['thousands_sep'],
+            'dec_point'     => $localeconv['decimal_point'],
+            'thousands_sep' => $localeconv['thousands_sep'],
         );
 	}
 

@@ -9,7 +9,8 @@ class TotalCost implements CalculatorOperationsInterface {
 	protected $payment;
     protected $args_default;
 
-	public function __construct(MonthlyPayment $payment){
+	public function __construct(MonthlyPayment $payment) {
+        $localeconv = localeconv();
 		$this->payment = $payment;
 
         $this->args_default = array(
@@ -17,8 +18,8 @@ class TotalCost implements CalculatorOperationsInterface {
             'format_output' => false,
 
             'precision'     => 2,
-            'dec_point'     => localeconv()['decimal_point'],
-            'thousands_sep' => localeconv()['thousands_sep'],
+            'dec_point'     => $localeconv['decimal_point'],
+            'thousands_sep' => $localeconv['thousands_sep'],
         );
 	}
 

@@ -7,13 +7,15 @@ class MonthlyPayment implements CalculatorOperationsInterface {
     protected $args_default;
 
     function __construct() {
+        $localeconv = localeconv();
+
         $this->args_default = array(
             'interest_only' => false,
             'format_output' => false,
 
             'precision'     => 2,
-            'dec_point'     => localeconv()['decimal_point'],
-            'thousands_sep' => localeconv()['thousands_sep'],
+            'dec_point'     => $localeconv['decimal_point'],
+            'thousands_sep' => $localeconv['thousands_sep'],
         );
     }
 

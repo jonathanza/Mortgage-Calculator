@@ -8,7 +8,8 @@ class Amortization implements CalculatorOperationsInterface{
 	protected $payment;
     protected $args_default;
 
-	function __construct(MonthlyPayment $payment){
+	function __construct(MonthlyPayment $payment) {
+        $localeconv = localeconv();
 		$this->payment = $payment;
 
         $this->args_default = array(
@@ -16,8 +17,8 @@ class Amortization implements CalculatorOperationsInterface{
             'format_output' => false,
 
             'precision'     => 2,
-            'dec_point'     => localeconv()['decimal_point'],
-            'thousands_sep' => localeconv()['thousands_sep'],
+            'dec_point'     => $localeconv['decimal_point'],
+            'thousands_sep' => $localeconv['thousands_sep'],
         );
 	}
 
