@@ -3,10 +3,11 @@
 /**
  * Calculates a monthly payment for a mortgage
  */
-class MonthlyPayment implements CalculatorOperationsInterface{
+class MonthlyPayment implements CalculatorOperationsInterface {
+    protected $args_default;
 
-	public function evaluate($principal, $rate, $months, $args = array()) {
-        $args_default = array(
+    function __construct() {
+        $this->args_default = array(
             'interest_only' => false,
             'format_output' => false,
 
@@ -14,8 +15,10 @@ class MonthlyPayment implements CalculatorOperationsInterface{
             'dec_point'     => localeconv()['decimal_point'],
             'thousands_sep' => localeconv()['thousands_sep'],
         );
+    }
 
-        $args = array_merge($args_default, $args);
+	public function evaluate($principal, $rate, $months, $args = array()) {
+        $args = array_merge($this->args_default, $args);
 
 		$rate = $rate/100/12;
 

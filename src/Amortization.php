@@ -6,22 +6,23 @@
 class Amortization implements CalculatorOperationsInterface{
 
 	protected $payment;
+    protected $args_default;
+
 	function __construct(MonthlyPayment $payment){
 		$this->payment = $payment;
+
+        $this->args_default = array(
+            'interest_only' => false,
+            'format_output' => false,
+
+            'precision'     => 2,
+            'dec_point'     => localeconv()['decimal_point'],
+            'thousands_sep' => localeconv()['thousands_sep'],
+        );
 	}
 
 	public function evaluate($principal, $rate, $months, $args = array()) {
-        $args_default = array(
-            'interest_only' => false,
-            'format_output'	=> false,
-
-            'precision'     => 2,
-            'dec_point'		=> localeconv()['decimal_point'],
-            'thousands_sep'	=> localeconv()['thousands_sep'],
-        );
-
-        $args = array_merge($args_default, $args);
-
+        $args = array_merge($this->args_default, $args);
 		$amortizationArray = array();
 
 		$monthlyPayment = $this->payment->evaluate($principal, $rate, $months);
